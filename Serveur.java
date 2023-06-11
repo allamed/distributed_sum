@@ -7,11 +7,12 @@ public class Serveur {
         try {
             ServerSocket serverSocket = new ServerSocket(1111); // Port d'écoute du serveur
             System.out.println("Serveur demarré");
-            System.out.println("Je suis à l'écoute sur le port 1111...");
+            System.out.println("\nJe suis Le serveur qui coordonne les noeuds");
+            System.out.println("\nJe suis à l'écoute sur le port 1111...");
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Je viens d'accepter la connection du du client : " + clientSocket);
+                System.out.println("\nJe viens d'accepter la connection du du client : " + clientSocket);
 
                 // Créer un thread pour gérer la connexion client
                 Thread clientThread = new Thread(new ClientHandler(clientSocket));
@@ -37,7 +38,7 @@ class ClientHandler implements Runnable {
             InputStream inputStream = clientSocket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String arrString = reader.readLine();
-            System.out.println("J'ai recu la requete du client  : [ " + arrString + " ]");
+            System.out.println("\nJ'ai recu la requete du client  : [ " + arrString + " ]");
 
 
             int[] arr = convertStringToArray(arrString);
@@ -63,8 +64,8 @@ class ClientHandler implements Runnable {
             int result1 = assignerTache(tache1, "192.168.43.62", 5555);
             int result2 = assignerTache(tache2, "192.168.43.62", 6666);
 
-            System.out.println("J'ai envoyé la tache au nœud 1 : " + Arrays.toString(tache1) + " .");
-            System.out.println("J'ai envoyé la tache au nœud 2 : " + Arrays.toString(tache2) + " .");
+            System.out.println("\nJ'ai envoyé la tache au nœud 1 : " + Arrays.toString(tache1) + " .");
+            System.out.println("\nJ'ai envoyé la tache au nœud 2 : " + Arrays.toString(tache2) + " .");
 
 
             // Merger les résultats des 2 nœuds
@@ -74,7 +75,7 @@ class ClientHandler implements Runnable {
             OutputStream outputStream = clientSocket.getOutputStream();
             PrintWriter writer = new PrintWriter(outputStream, true);
             writer.println((mergedResult));
-            System.out.println("J'ai envoyé le résultat au client : " + mergedResult + " .");
+            System.out.println("\nJ'ai envoyé le résultat au client : " + mergedResult + " .");
 
             // Fermer les connexions
             reader.close();

@@ -6,11 +6,12 @@ public class Node2 {
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(6666); // Port d'écoute du nœud
-            System.out.println("Le nœud est à l'écoute sur le port 12346...");
+            System.out.println("\nJe suis Le noeud 2");
+            System.out.println("\nJe suis entrain d'écouter sur le port 6666...");
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Connexion acceptée du client : " + clientSocket);
+                System.out.println("\nConnexion acceptée du client : " + clientSocket);
 
                 // Créer un thread pour gérer la connexion client
                 Thread clientThread = new Thread(new ClientHandler(clientSocket));
@@ -31,12 +32,12 @@ public class Node2 {
         @Override
         public void run() {
             try {
-                // Recevoir la sous-matrice du client
+                // Recevoir la sous-tache du client
                 InputStream inputStream = clientSocket.getInputStream();
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 int[] subTask = (int[]) objectInputStream.readObject();
 
-                System.out.println("J'ai recu la tache de calculer la somme des elements : " + (Arrays.toString(subTask) ));
+                System.out.println("\nJ'ai recu la tache de calculer la somme des elements : " + (Arrays.toString(subTask) ));
 
 
                 int result = 0;
@@ -49,7 +50,7 @@ public class Node2 {
                 OutputStream outputStream = clientSocket.getOutputStream();
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
                 objectOutputStream.writeObject(result);
-                System.out.println("j'ai envoyé au serveur le résultat : " + result + " .");
+                System.out.println("\nj'ai envoyé au serveur le résultat : " + result + " .");
 
                 // Fermer les connexions
                 objectInputStream.close();

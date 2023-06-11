@@ -6,11 +6,12 @@ public class Node1 {
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(5555); // Port d'écoute du nœud
-            System.out.println("Node 1 is listening on port 5555...");
+            System.out.println("\nJe suis Le noeud 1");
+            System.out.println("\nJe suis entrain d'écouter sur le port 5555...");
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Connexion accepted from client " + clientSocket);
+                System.out.println("\nJ'ai accpté la Connexion du client " + clientSocket);
 
                 // Créer un processus pour gérer la connexion client
                 Thread clientThread = new Thread(new ClientHandler(clientSocket));
@@ -36,7 +37,7 @@ public class Node1 {
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 int[] subTask = (int[]) objectInputStream.readObject();
 
-                System.out.println("J'ai recu la tache de calculer la somme des elements : " + (Arrays.toString(subTask)));
+                System.out.println("\nJ'ai recu la tache de calculer la somme des elements : " + (Arrays.toString(subTask)));
 
 
                 int result = 0;
@@ -49,7 +50,7 @@ public class Node1 {
                 OutputStream outputStream = clientSocket.getOutputStream();
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
                 objectOutputStream.writeObject(result);
-                System.out.println("j'ai envoyé au serveur le résultat : " + result + " .");
+                System.out.println("\nj'ai envoyé au serveur le résultat : " + result + " .");
 
                 // Fermer les connexions
                 objectInputStream.close();
